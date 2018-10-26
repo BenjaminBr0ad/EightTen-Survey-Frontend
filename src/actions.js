@@ -21,7 +21,7 @@ export const SUBMIT_ANSWER = 'SUBMIT_ANSWER'
 export const LOAD_RESULTS = 'LOAD_RESULTS'
 
 
-const API = 'http://localhost:3000/'
+const API = process.env.REACT_APP_API_URL
 
 export const submitAnswer = (postObj) => {
   return async dispatch => {
