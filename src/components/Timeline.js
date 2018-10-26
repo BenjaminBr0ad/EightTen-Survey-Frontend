@@ -11,7 +11,6 @@ export default class Timeline extends Component {
     return (
       <VerticalTimeline className='vertical-timeline'>
         {responses ? responses.map((response, i) => {
-          console.log(responses);
             return (
               <VerticalTimelineElement
                 key={response.response}
