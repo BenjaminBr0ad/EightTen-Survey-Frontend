@@ -21,11 +21,9 @@ export const SUBMIT_ANSWER = 'SUBMIT_ANSWER'
 export const LOAD_RESULTS = 'LOAD_RESULTS'
 
 
-const API = process.env.REACT_APP_API_URL
-
 export const submitAnswer = (postObj) => {
   return async dispatch => {
-    fetch(`${API}client_response`, {
+    fetch(`${process.env.REACT_APP_API_URL}client_response`, {
       method: 'POST',
       body: JSON.stringify(postObj),
       headers: {
@@ -50,7 +48,7 @@ export const editTraitResponse = (response, id) => {
     response
   }
   return async dispatch => {
-    await fetch(`${API}traits/${id}`, {
+    await fetch(`${process.env.REACT_APP_API_URL}traits/${id}`, {
       method: 'PATCH',
       body: JSON.stringify(obj),
       headers: {
@@ -68,7 +66,7 @@ export const addQuestion = (question) => {
       type: question.type
     }
     return async dispatch => {
-      await fetch(`${API}questions/${question.id}`, {
+      await fetch(`${process.env.REACT_APP_API_URL}questions/${question.id}`, {
         method: 'PATCH',
         body: JSON.stringify(obj),
         headers: {
@@ -79,7 +77,7 @@ export const addQuestion = (question) => {
     }
   } else {      /// new question post **MVP**
     return async dispatch => {
-      const response = await fetch(`${API}questions`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}questions`, {
         method: 'POST',
         body: JSON.stringify(question),
         headers: {
@@ -92,7 +90,7 @@ export const addQuestion = (question) => {
         let optionsObj = {
           [questionData.id]: question.optionsArray
         }
-        fetch(`${API}multiple_choice`, {
+        fetch(`${process.env.REACT_APP_API_URL}multiple_choice`, {
           method: 'POST',
           body: JSON.stringify(optionsObj),
           headers: {
@@ -180,7 +178,7 @@ export const changeCTSView = view => {
 
 export const loadClients = () => {
   return async dispatch => {
-    const response = await fetch(`${API}users`)
+    const response = await fetch(`${process.env.REACT_APP_API_URL}users`)
     const clients = await response.json()
     let clients1 = clients.filter(client => !client.is_admin)
     dispatch({
@@ -192,7 +190,7 @@ export const loadClients = () => {
 
 export const loadClient = (id) => {
   return async dispatch => {
-    const response = await fetch(`${API}users/${id}/responses`)
+    const response = await fetch(`${process.env.REACT_APP_API_URL}users/${id}/responses`)
     const client = await response.json()
     const employeeImpactQuestions = client.filter(client => client.trait_id === 1)
     const communityImpactQuestions = client.filter(client => client.trait_id === 2)
@@ -211,7 +209,7 @@ export const loadClient = (id) => {
 
 export const loadResults = (id) => {
   return async dispatch => {
-    const response = await fetch(`${API}users/${id}/results`)
+    const response = await fetch(`${process.env.REACT_APP_API_URL}users/${id}/results`)
     const client = await response.json()
     const employeeImpactQuestions = client.filter(client => client.trait_id === 1)
     const communityImpactQuestions = client.filter(client => client.trait_id === 2)
@@ -230,11 +228,11 @@ export const loadResults = (id) => {
 
 export const loadTrait = () => {
   return async dispatch => {
-    const response1 = await fetch(`${API}traits/1`)
+    const response1 = await fetch(`${process.env.REACT_APP_API_URL}traits/1`)
     const trait1 = await response1.json()
-    const response2 = await fetch(`${API}traits/2`)
+    const response2 = await fetch(`${process.env.REACT_APP_API_URL}traits/2`)
     const trait2 = await response2.json()
-    const response3 = await fetch(`${API}traits/3`)
+    const response3 = await fetch(`${process.env.REACT_APP_API_URL}traits/3`)
     const trait3 = await response3.json()
     dispatch({
       type: LOAD_TRAIT,
@@ -245,7 +243,7 @@ export const loadTrait = () => {
 
 export const loadSurvey = (id) => {
   return async dispatch => {
-    const response = await fetch(`${API}survey/${id}`)
+    const response = await fetch(`${process.env.REACT_APP_API_URL}survey/${id}`)
     const survey = await response.json()
     dispatch({
       type: LOAD_SURVEY,
@@ -256,7 +254,7 @@ export const loadSurvey = (id) => {
 
 export const loadSurveys = () => {
   return async dispatch => {
-    const response = await fetch(`${API}survey`)
+    const response = await fetch(`${process.env.REACT_APP_API_URL}survey`)
     const surveys = await response.json()
     dispatch({
       type: LOAD_SURVEYS,
@@ -301,7 +299,7 @@ export const login = (email, password) => {
     password: password
   }
   return async dispatch => {
-    const response = await fetch(`${API}login`, {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}login`, {
       method: 'POST',
       body: JSON.stringify(user),
       headers: {
@@ -320,7 +318,7 @@ export const login = (email, password) => {
 export const newUser = (email, password, first_name, last_name, phone, company_name) => {
   const user = { email, password, first_name, last_name, phone, company_name }
   return async dispatch => {
-    const response = await fetch(`${API}users`, {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}users`, {
       method: 'POST',
       body: JSON.stringify(user),
       headers: {
@@ -339,7 +337,7 @@ export const newUser = (email, password, first_name, last_name, phone, company_n
 
 export const retrieveQuestionsByClientId = (client_id) => {
   return async dispatch => {
-    const response = await fetch(`${API}questions/client_id/${client_id}`)
+    const response = await fetch(`${process.env.REACT_APP_API_URL}questions/client_id/${client_id}`)
     const questions = await response.json()
     dispatch({
       type: RETRIEVE_QUESTIONS_BY_CLIENT_ID,
@@ -413,9 +411,9 @@ const sortQuestions = (questions, choices) => {
 
 export const initializeQuestions = () => {
  return async dispatch => {
-   const questionCall = await fetch(`${API}questions`)
+   const questionCall = await fetch(`${process.env.REACT_APP_API_URL}questions`)
    const questions = await questionCall.json()
-   const multipleChoiceCall = await fetch(`${API}multiple_choice`)
+   const multipleChoiceCall = await fetch(`${process.env.REACT_APP_API_URL}multiple_choice`)
    const choices = await multipleChoiceCall.json()
    let randomizedQuestions = sortQuestions(questions, choices)
    dispatch({
